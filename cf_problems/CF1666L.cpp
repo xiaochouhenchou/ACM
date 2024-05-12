@@ -8,40 +8,52 @@ typedef long long ll;
 typedef pair<int, int> PII;
 const int inf = 0x3f3f3f3f;
 const ll INF = 1e18;
-const int N = 200010;
+const int N = 300010;
 
-int n, m, s, pt, t, cnt, pre[N];
-int vis[N], c[N];
+int n, m, s;
+int c[N], pre[N];
 vector<int> e[N];
 
-void dfs(int u, int fa, int col) {
-	pre[u] = fa;
-	c[u] = col;
-	vis[u] = 1;
-	if(!fa) {
-		int idx = 0;
-		for(int v : e[u]) {
-			if(!vis[v]) {
-				dfs(v, u, ++idx);
-			}
-		}		
-	} else {
-		for(int v : e[u]) {
-			if(!vis[v]) {
-				dfs(v, u, col);
-			}
-		}
+// s -> ... -> pt -> t
+// s -> ... -> t
+void print_ans(int t, int pt) {
+	vector<int> v1, v2{t};
+	while(t) {
+		v1.push_back(t);
+		t = pre[t];
 	}
+	while(pt) {
+		v2.push_back(pt);
+		pt = pre[pt];
+	}
+	reverse(v1.begin(), v1.end());
+	reverse(v2.begin(), v2.end());
+	cout << "Possible\n";
+	cout << sz(v1) << '\n';
+	for(int i = 0; i < sz(v1); i++) {
+		cout << v1[i] << " \n"[i == sz(v1) - 1];
+	}
+	cout << sz(v2) << '\n';
+	for(int i = 0; i < sz(v2); i++) {
+		cout << v2[i] << " \n"[i == sz(v2) - 1];
+	}
+	exit(0);
 }
 
-void dfs(int u, int fa) {
-	cout << u << ' ' << fa << ' ' << c[u] << '\n';
-	if(t) return;
-	for(int v : e[u]) {
-		if(c[v] != c[u]) {	// u、 v 来自不同子树
-			
+void dfs(int u, int fa, int start) {
+	if(u == s) return;
+	// u 就是所求的 t，在起点为 start 的子树里遇到了起点不同的 u
+	if(c[u]) {	
+		if(c[u] != start) {
+			print_ans(u, fa);
 		}
-		dfs(v, u);
+		return;
+	}
+	
+	c[u] = start;
+	pre[u] = fa;
+	for(int v : e[u]) {
+		dfs(v, u, start);
 	}
 }
 
@@ -52,41 +64,12 @@ void solve() {
 		cin >> u >> v;
 		e[u].push_back(v);
 	}
-	dfs(s, 0, 0);
-	dfs(s, 0);
 
-	if(!t) {
-		cout << "Impossible\n";
-		return;
+	for(int v : e[s]) {
+		dfs(v, s, v);
 	}
-	
-	vector<int> v1, v2;
-	{
-		int cur = pt;
-		v1.push_back(t);
-		while(cur) {
-			v1.push_back(cur);
-			cur = pre[cur];
-		}
-	}
-	{
-		int cur = t;
-		while(cur) {
-			v2.push_back(cur);
-			cur = pre[cur];
-		}
-	}
-	cout << "Possible\n";
-	reverse(v1.begin(), v1.end());
-	reverse(v2.begin(), v2.end());
-	cout << sz(v1) << '\n';
-	for(int i = 0; i < sz(v1); i++) {
-		cout << v1[i] << " \n"[i == sz(v1) - 1];
-	}
-	cout << sz(v2) << '\n';
-	for(int i = 0; i < sz(v2); i++) {
-		cout << v2[i] << " \n"[i == sz(v2) - 1];
-	}	
+
+	cout << "Impossible\n";
 }
 
 int main() {
