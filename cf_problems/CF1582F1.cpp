@@ -8,7 +8,7 @@ typedef long long ll;
 typedef pair<int, int> PII;
 const int inf = 0x3f3f3f3f;
 const ll INF = 1e18;
-const int N = 100010, M = 1010;
+const int N = 100010, M = 512;
 
 int n;
 int f[N][M], a[N];
