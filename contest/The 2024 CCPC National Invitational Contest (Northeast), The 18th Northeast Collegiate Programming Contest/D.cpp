@@ -4,13 +4,15 @@
 #define sz(x) ((int)x.size())
 using namespace std;
 
-typedef pair<int, int> PII;
 typedef long long ll;
+typedef pair<int, int> PII;
 const int inf = 0x3f3f3f3f;
 const ll INF = 1e18;
 
 void solve() {
-	cout << "Hello, Sublime Text!\n";
+	int n;
+	cin >> n;
+	cout << "lose\n";
 }
 
 int main() {
@@ -19,5 +21,5 @@ int main() {
 	int t = 1;
 	cin >> t;
 	while(t--) solve();
-	return 0;	
+	return 0;
 }
