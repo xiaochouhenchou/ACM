@@ -12,17 +12,23 @@ const ll INF = 1e18;
 void solve() {
 	int n;
 	cin >> n;
-	vector<ll> a(n + 1);
-	for(int i = 1; i <= n; i++) {
-		cin >> a[i];
-	}
-	ll g = 0;
-	for(int i = 1; i < n; i++) {
-		for(int j = i + 1; j <= n; j++) {
-			g = __gcd(g, a[i] / __gcd(a[i], a[j]) * a[j]);
+	cout << n << ":";
+	vector<PII> v;
+	for(int i = 2; i <= n / i; i++) {
+		if(n % i == 0) {
+			int cnt = 0;
+			while(n % i == 0) n /= i, cnt += 1;
+			v.emplace_back(i, cnt);
 		}
 	}
-	cout << g << '\n';
+	if(n > 1) v.emplace_back(n, 1);
+	sort(v.begin(), v.end());
+	for(auto [p, c] : v) {
+		while(c--) {
+			cout << " " << p;
+		}
+	}
+	cout << '\n';
 }
 
 int main() {

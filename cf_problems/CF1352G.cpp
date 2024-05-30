@@ -9,27 +9,34 @@ typedef pair<int, int> PII;
 const int inf = 0x3f3f3f3f;
 const ll INF = 1e18;
 
+// 分奇偶构造
 void solve() {
 	int n;
 	cin >> n;
-	vector<ll> a(n + 1);
-	for(int i = 1; i <= n; i++) {
-		cin >> a[i];
+	if(n <= 3) {
+		cout << -1 << '\n';
+		return;
 	}
-	ll g = 0;
-	for(int i = 1; i < n; i++) {
-		for(int j = i + 1; j <= n; j++) {
-			g = __gcd(g, a[i] / __gcd(a[i], a[j]) * a[j]);
-		}
+	vector<int> a(n);
+	int idx = 0;
+	for(int i = n - (n % 2 == 0); i > 0; i -= 2) {
+		a[idx++] = i;
 	}
-	cout << g << '\n';
+	a[idx++] = 4;
+	a[idx++] = 2;
+	for(int i = 6; idx < n; i += 2) {
+		a[idx++] = i;
+	}
+	for(int i = 0; i < n; i++) {
+		cout << a[i] << " \n"[i == n - 1];
+	}
 }
 
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(0), cout.tie(0);
 	int t = 1;
-	// cin >> t;
+	cin >> t;
 	while(t--) solve();
 	return 0;
 }

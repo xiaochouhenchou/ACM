@@ -9,49 +9,32 @@ typedef pair<int, int> PII;
 const int inf = 0x3f3f3f3f;
 const ll INF = 1e18;
 
-class Solution {
-public:
-    int countArrangement(int n) {
-        vector<vector<int>> f(n + 1, vector<int>(1 << n));
-        vector<vector<vector<int>>> pre(n + 1, vector<vector<int>>(1 << n));
-        vector<int> a;
-        f[0][0] = 1;
-        for(int i = 1; i <= n; i++) {
-            a.clear();
-            for(int j = 1; j <= i / j; j++) {
-            	if(i % j == 0) {
-					a.push_back(j);
-                	if(i / j != j) a.push_back(i / j);
-            	}
-            }
-            for(int j = i + i; j <= n; j += i) {
-                a.push_back(j);
-            }
-            for(int j = 0; j < (1 << n); j++) {
-                for(int x : a) {
-                    if(!(j >> (x - 1) & 1)) continue;
-                    f[i][j] += f[i - 1][j ^ (1 << (x - 1))];
-                    if(f[i - 1][j ^ (1 << (x - 1))]) {
-                    	pre[i][j].push_back(j ^ (1 << (x - 1)));
-                    }
-                }
-            }
-        }
-        return f[n][(1 << n) - 1];
-    }
-};
-
 void solve() {
 	int n;
 	cin >> n;
-	cout << Solution().countArrangement(n) << '\n';
+    vector<int> a(n + 1);
+    for(int i = 1; i <= n; i++) {
+        cin >> a[i];
+    }
+    
+    ll ans = 0;
+    for(int i = 1; i <= n; ) {
+        int j = i + 1, maxv = a[i];
+        while(j <= n && (a[j] > 0) == (a[i] > 0)) {
+            maxv = max(maxv, a[j]);
+            j += 1;
+        }
+        ans += maxv;
+        i = j;
+    }
+    cout << ans << '\n';
 }
 
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(0), cout.tie(0);
 	int t = 1;
-	// cin >> t;
+	cin >> t;
 	while(t--) solve();
 	return 0;
 }

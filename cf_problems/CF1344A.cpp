@@ -12,24 +12,26 @@ const ll INF = 1e18;
 void solve() {
 	int n;
 	cin >> n;
-	vector<ll> a(n + 1);
-	for(int i = 1; i <= n; i++) {
-		cin >> a[i];
+	vector<int> a(n), mp(n);
+	for(auto &x : a) {
+		cin >> x;
 	}
-	ll g = 0;
-	for(int i = 1; i < n; i++) {
-		for(int j = i + 1; j <= n; j++) {
-			g = __gcd(g, a[i] / __gcd(a[i], a[j]) * a[j]);
+	for(int i = 0; i < n; i++) {
+		int r = ((i + a[i]) % n + n) % n;
+		if(mp[r]) {
+			cout << "NO\n";
+			return;
 		}
+		mp[r] += 1;
 	}
-	cout << g << '\n';
+	cout << "YES\n";
 }
 
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(0), cout.tie(0);
 	int t = 1;
-	// cin >> t;
+	cin >> t;
 	while(t--) solve();
 	return 0;
 }

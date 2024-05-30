@@ -10,19 +10,20 @@ const int inf = 0x3f3f3f3f;
 const ll INF = 1e18;
 
 void solve() {
-	int n;
-	cin >> n;
-	vector<ll> a(n + 1);
-	for(int i = 1; i <= n; i++) {
-		cin >> a[i];
+	int n, t;
+	cin >> n >> t;
+	map<int, int> mp;
+	for(int i = 1, l, r; i <= n; i++) {
+		cin >> l >> r;
+		mp[l] += 1;
+		mp[r] -= 1;
 	}
-	ll g = 0;
-	for(int i = 1; i < n; i++) {
-		for(int j = i + 1; j <= n; j++) {
-			g = __gcd(g, a[i] / __gcd(a[i], a[j]) * a[j]);
-		}
+	int cnt = 0, ans = 0;
+	for(auto [x, c] : mp) {
+		cnt += c;
+		ans = max(ans, cnt);
 	}
-	cout << g << '\n';
+	cout << ans << '\n';
 }
 
 int main() {

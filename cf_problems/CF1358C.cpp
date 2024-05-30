@@ -10,26 +10,16 @@ const int inf = 0x3f3f3f3f;
 const ll INF = 1e18;
 
 void solve() {
-	int n;
-	cin >> n;
-	vector<ll> a(n + 1);
-	for(int i = 1; i <= n; i++) {
-		cin >> a[i];
-	}
-	ll g = 0;
-	for(int i = 1; i < n; i++) {
-		for(int j = i + 1; j <= n; j++) {
-			g = __gcd(g, a[i] / __gcd(a[i], a[j]) * a[j]);
-		}
-	}
-	cout << g << '\n';
+	ll x1, y1, x2, y2;
+	cin >> x1 >> y1 >> x2 >> y2;
+	cout << (x2 - x1) * (y2 - y1) + 1 << '\n';
 }
 
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(0), cout.tie(0);
 	int t = 1;
-	// cin >> t;
+	cin >> t;
 	while(t--) solve();
 	return 0;
 }

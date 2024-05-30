@@ -12,17 +12,15 @@ const ll INF = 1e18;
 void solve() {
 	int n;
 	cin >> n;
-	vector<ll> a(n + 1);
-	for(int i = 1; i <= n; i++) {
-		cin >> a[i];
-	}
-	ll g = 0;
-	for(int i = 1; i < n; i++) {
-		for(int j = i + 1; j <= n; j++) {
-			g = __gcd(g, a[i] / __gcd(a[i], a[j]) * a[j]);
+	int ans = n;
+	for(int i = 2; i <= n / i; i++) {
+		if(n % i == 0) {
+			while(n % i == 0) n /= i;
+			ans = ans / i * (i - 1);
 		}
 	}
-	cout << g << '\n';
+	if(n > 1) ans = ans / n * (n - 1);
+	cout << ans << '\n';
 }
 
 int main() {

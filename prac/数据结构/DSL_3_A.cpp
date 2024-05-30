@@ -10,19 +10,25 @@ const int inf = 0x3f3f3f3f;
 const ll INF = 1e18;
 
 void solve() {
-	int n;
-	cin >> n;
-	vector<ll> a(n + 1);
+	int n, s;
+	cin >> n >> s;
+	vector<int> a(n + 1);
 	for(int i = 1; i <= n; i++) {
 		cin >> a[i];
 	}
-	ll g = 0;
-	for(int i = 1; i < n; i++) {
-		for(int j = i + 1; j <= n; j++) {
-			g = __gcd(g, a[i] / __gcd(a[i], a[j]) * a[j]);
+	int sum = 0, ans = inf;
+	for(int i = 1, j = 1; i <= n; i++) {
+		while(j <= n && sum < s) {
+			sum += a[j];
+			j += 1;
 		}
+		if(sum >= s) {
+			ans = min(ans, j - i);
+		}
+		sum -= a[i];
 	}
-	cout << g << '\n';
+	if(ans >= inf) ans = 0;
+	cout << ans << '\n';
 }
 
 int main() {

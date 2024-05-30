@@ -8,18 +8,16 @@ typedef long long ll;
 typedef pair<int, int> PII;
 const int inf = 0x3f3f3f3f;
 const ll INF = 1e18;
-
-map<int, int> mp;
+const int N = 2e9;
 
 void get_data() {
 	ofstream fout("in.txt");
 	int t = 1;
-	fout << t << '\n';
-	int n = rand() % 20;
-	int x = rand() % 100;
-	fout << n << ' ' << x << '\n';
+	// fout << t << '\n';
+	int n = 150000;
+	fout << n << '\n';
 	for(int i = 1; i <= n; i++) {
-		fout << rand() % 100 << " \n"[i == n];
+		fout << rand() % N + 1 << ' ' << rand() % N + 1 << '\n';
 	}
 	fout.close();
 }
@@ -28,20 +26,20 @@ bool test(string s) {
 	string out = s + ".txt";
 	string e = s + ".exe";
 	string str1 = e + " < in.txt > " + out;
+	string str2 = "baoli.exe < in.txt > baoli.txt";
+	string str3 = "fc baoli.txt " + out;
 	system(str1.c_str());
-	ifstream ans(out.c_str());
-	int x;
-	ans >> x;
-	mp[x] += 1;
-	return x <= 3;
+	// system(str2.c_str());
+	// return !system(str3.c_str());
+	return true;
 }
 
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(0), cout.tie(0);
 	srand((unsigned)time(NULL));
-	string name = "CF1455";
-	int t = 1000;
+	string name = "CF1025B";
+	int t = 100;
 	for(int i = 1; i <= t; i++) {
 		get_data();
 		if(!test(name)) {
@@ -50,9 +48,6 @@ int main() {
 		} else {
 			cout << "ac on test " << i << endl;
 		}
-	}
-	for(auto [x, c] : mp) {
-		cout << x << ' ' << c << endl;
 	}
 	return 0;
 }

@@ -9,20 +9,20 @@ typedef pair<int, int> PII;
 const int inf = 0x3f3f3f3f;
 const ll INF = 1e18;
 
+ll qpow(ll a, ll b, ll mod) {
+	ll res = 1;
+	while(b) {
+		if(b & 1) res = res * a % mod;
+		b >>= 1;
+		a = a * a % mod;
+	}
+	return res % mod;
+}
+
 void solve() {
-	int n;
-	cin >> n;
-	vector<ll> a(n + 1);
-	for(int i = 1; i <= n; i++) {
-		cin >> a[i];
-	}
-	ll g = 0;
-	for(int i = 1; i < n; i++) {
-		for(int j = i + 1; j <= n; j++) {
-			g = __gcd(g, a[i] / __gcd(a[i], a[j]) * a[j]);
-		}
-	}
-	cout << g << '\n';
+	int m, n;
+	cin >> m >> n;
+	cout << qpow(m, n, 1e9 + 7) << '\n';
 }
 
 int main() {

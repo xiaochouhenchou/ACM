@@ -8,21 +8,25 @@ typedef long long ll;
 typedef pair<int, int> PII;
 const int inf = 0x3f3f3f3f;
 const ll INF = 1e18;
+const int N = 1000010;
 
-void solve() {
-	int n;
-	cin >> n;
-	vector<ll> a(n + 1);
+int n, k;
+int a[N];
+
+void solve() {	
+	cin >> n >> k;
 	for(int i = 1; i <= n; i++) {
 		cin >> a[i];
 	}
-	ll g = 0;
-	for(int i = 1; i < n; i++) {
-		for(int j = i + 1; j <= n; j++) {
-			g = __gcd(g, a[i] / __gcd(a[i], a[j]) * a[j]);
+	deque<int> q;
+	for(int i = 1; i <= n; i++) {
+		if(sz(q) && q.front() < i - k + 1) q.pop_front();
+		while(sz(q) && a[q.back()] >= a[i]) q.pop_back();
+		q.push_back(i);
+		if(i >= k) {
+			cout << a[q.front()] << " \n"[i == n];
 		}
 	}
-	cout << g << '\n';
 }
 
 int main() {
